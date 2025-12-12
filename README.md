@@ -82,16 +82,5 @@
 - **LinkedIn:** https://linkedin.com/in/md-zeeshan-b5a35a17a  
 - **Email:** md.zeeshan.bigdata@gmail.com  
 
----
 
-## ✔ Summary of This README
-This single README includes:
-
-- **Minimal professional sections**  
-- **Fancy badges and modern styles**  
-- **Big-data-specific branding**  
-- **Dark mode stats**  
-- **Ultra simple project descriptions**  
-
-A perfect all-in-one profile for recruiters, developers, and the GitHub community.
 
