@@ -67,13 +67,10 @@
 ## 🌓 Dark Mode GitHub Stats (Dark + Fancy)
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=cd-mdzeeshan&show_icons=true&theme=tokyonight" />
+  <img src="./assets/github-stats.svg"
+       width="700"
+       alt="GitHub Stats">
 </p>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=cd-mdzeeshan&theme=tokyo-night" />
-</p>
-
 
 ---
 
