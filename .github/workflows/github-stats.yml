@@ -1,0 +1,191 @@
+name: Update GitHub Stats
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 18 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get GitHub statistics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          username = "cd-mdzeeshan"
+          token = os.environ["GH_TOKEN"]
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              name
+              login
+              contributionsCollection {
+                totalCommitContributions
+                totalIssueContributions
+                totalPullRequestContributions
+                totalRepositoryContributions
+              }
+              repositories(ownerAffiliations: OWNER, first: 100) {
+                totalCount
+              }
+              followers {
+                totalCount
+              }
+            }
+          }
+          """
+
+          payload = json.dumps({
+              "query": query,
+              "variables": {"login": username}
+          }).encode()
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=payload,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Content-Type": "application/json",
+                  "User-Agent": "github-stats"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              data = json.load(response)
+
+          user = data["data"]["user"]
+          contributions = user["contributionsCollection"]
+
+          stats = {
+              "name": user["name"] or user["login"],
+              "commits": contributions["totalCommitContributions"],
+              "issues": contributions["totalIssueContributions"],
+              "prs": contributions["totalPullRequestContributions"],
+              "repos": contributions["totalRepositoryContributions"],
+              "followers": user["followers"]["totalCount"]
+          }
+
+          os.makedirs("assets", exist_ok=True)
+
+          with open("assets/github-stats.json", "w") as f:
+              json.dump(stats, f, indent=2)
+
+          print(json.dumps(stats, indent=2))
+          PY
+
+      - name: Generate stats SVG
+        run: |
+          python3 - <<'PY'
+          import json
+          import html
+
+          with open("assets/github-stats.json") as f:
+              s = json.load(f)
+
+          name = html.escape(s["name"])
+
+          svg = f'''<svg xmlns="http://www.w3.org/2000/svg"
+          width="700" height="300" viewBox="0 0 700 300">
+
+          <rect width="700" height="300" rx="15"
+                fill="#161b22"
+                stroke="#30363d"/>
+
+          <text x="40" y="50"
+                fill="#58a6ff"
+                font-size="25"
+                font-family="Arial"
+                font-weight="bold">
+            {name}'s GitHub Stats
+          </text>
+
+          <text x="40" y="105"
+                fill="#8b949e"
+                font-size="18"
+                font-family="Arial">
+            Commits
+          </text>
+
+          <text x="250" y="105"
+                fill="#58a6ff"
+                font-size="20"
+                font-family="Arial"
+                font-weight="bold">
+            {s["commits"]}
+          </text>
+
+          <text x="40" y="150"
+                fill="#8b949e"
+                font-size="18"
+                font-family="Arial">
+            Pull Requests
+          </text>
+
+          <text x="250" y="150"
+                fill="#58a6ff"
+                font-size="20"
+                font-family="Arial"
+                font-weight="bold">
+            {s["prs"]}
+          </text>
+
+          <text x="40" y="195"
+                fill="#8b949e"
+                font-size="18"
+                font-family="Arial">
+            Issues
+          </text>
+
+          <text x="250" y="195"
+                fill="#58a6ff"
+                font-size="20"
+                font-family="Arial"
+                font-weight="bold">
+            {s["issues"]}
+          </text>
+
+          <text x="40" y="240"
+                fill="#8b949e"
+                font-size="18"
+                font-family="Arial">
+            Repositories Contributed
+          </text>
+
+          <text x="300" y="240"
+                fill="#58a6ff"
+                font-size="20"
+                font-family="Arial"
+                font-weight="bold">
+            {s["repos"]}
+          </text>
+
+          </svg>'''
+
+          with open("assets/github-stats.svg", "w") as f:
+              f.write(svg)
+          PY
+
+      - name: Commit updated stats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/github-stats.svg assets/github-stats.json
+
+          git diff --cached --quiet || git commit -m "Update GitHub stats"
+
+          git push
