@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+width="700" height="300" viewBox="0 0 700 300">
+
+<rect width="700" height="300" rx="15"
+      fill="#161b22"
+      stroke="#30363d"/>
+
+<text x="40" y="50"
+      fill="#58a6ff"
+      font-size="25"
+      font-family="Arial"
+      font-weight="bold">
+  Md Zeeshan's GitHub Stats
+</text>
+
+<text x="40" y="105"
+      fill="#8b949e"
+      font-size="18"
+      font-family="Arial">
+  Commits
+</text>
+
+<text x="250" y="105"
+      fill="#58a6ff"
+      font-size="20"
+      font-family="Arial"
+      font-weight="bold">
+  12
+</text>
+
+<text x="40" y="150"
+      fill="#8b949e"
+      font-size="18"
+      font-family="Arial">
+  Pull Requests
+</text>
+
+<text x="250" y="150"
+      fill="#58a6ff"
+      font-size="20"
+      font-family="Arial"
+      font-weight="bold">
+  0
+</text>
+
+<text x="40" y="195"
+      fill="#8b949e"
+      font-size="18"
+      font-family="Arial">
+  Issues
+</text>
+
+<text x="250" y="195"
+      fill="#58a6ff"
+      font-size="20"
+      font-family="Arial"
+      font-weight="bold">
+  0
+</text>
+
+<text x="40" y="240"
+      fill="#8b949e"
+      font-size="18"
+      font-family="Arial">
+  Repositories Contributed
+</text>
+
+<text x="300" y="240"
+      fill="#58a6ff"
+      font-size="20"
+      font-family="Arial"
+      font-weight="bold">
+  3
+</text>
+
+</svg>
