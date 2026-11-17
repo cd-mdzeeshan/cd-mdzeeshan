@@ -47,7 +47,7 @@ I'm a Full Stack Developer passionate about building modern web and mobile appli
 
 ## 📊 GitHub Statistics
 
-\<p align="center">   \<img src="[https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&theme=tokyonight](https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME\&show_icons=true\&theme=tokyonight)" alt="GitHub Stats" /> \</p>
+<p align="center">   \<img src="[https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&theme=tokyonight](https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME\&show_icons=true\&theme=tokyonight)" alt="GitHub Stats" /> \</p>
 
 ## 🤝 Connect With Me
 
